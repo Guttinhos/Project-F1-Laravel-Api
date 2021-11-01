@@ -16,11 +16,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('equipes', [equipesController::class, 'index']);
-Route::post('/add-equipes', [equipesController::class, 'store']);
-Route::get('/edit-equipes/{id}', [equipesController::class, 'edit']);
-Route::put('update-equipes/{id}', [equipesController::class, 'update']);
-Route::delete('delete-equipe/{id}', [equipesController::class, 'destroy']);
+Route::get('/equipes', [equipesController::class, 'index']);
+Route::post('/equipes', [equipesController::class, 'store']);
+Route::get('/equipes/{id}', [equipesController::class, 'edit']);
+Route::put('/equipes/{id}', [equipesController::class, 'update']);
+Route::delete('/equipes/{id}', [equipesController::class, 'destroy']);
 
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
