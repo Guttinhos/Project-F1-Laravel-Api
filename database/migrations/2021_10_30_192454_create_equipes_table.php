@@ -18,6 +18,8 @@ class CreateEquipesTable extends Migration
             $table->string('nome');
             $table->string('motor');
             $table->string('chassi');
+            $table->string('fundador');
+            $table->string('sede');
             $table->timestamps();
         });
     }

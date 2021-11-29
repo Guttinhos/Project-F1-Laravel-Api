@@ -13,5 +13,7 @@ class equipes extends Model
         'nome',
         'motor',
         'chassi',
+        'fundador',
+        'sede',
     ];
 }

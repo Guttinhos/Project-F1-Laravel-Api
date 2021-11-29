@@ -5,7 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Models\equipes;
 use Illuminate\Http\Request;
-
+use \Illuminate\Database\QueryException;
 
 class equipesController extends Controller
 {
@@ -14,43 +14,64 @@ class equipesController extends Controller
     {
         $equipe = equipes::all();
         return response()->json([
-            'status' => 200,
             'equipes' => $equipe
-        ]);
+        ], 200);
     }
 
     public function store(Request $request)
     {
-        $equipe = new equipes;
-        $equipe->nome = $request->input('nome');
-        $equipe->motor = $request->input('motor');
-        $equipe->chassi = $request->input('chassi');
-        $equipe->save();
+        try {
+            $equipe = new equipes;
+            $equipe->nome = $request->input('nome');
+            $equipe->motor = $request->input('motor');
+            $equipe->chassi = $request->input('chassi');
+            $equipe->fundador = $request->input('fundador');
+            $equipe->sede = $request->input('sede');
+            $equipe->save();
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'Equipe cadastrada com Sucesso'
-        ]);
+            return response()->json([
+                'message' => 'Equipe cadastrada com Sucesso',
+            ],201);
+
+        } catch (QueryException $e) {
+            return response()->json([
+                'message' => 'Equipe já cadastrada',
+            ], 400);
+        }
     }
 
     public function edit($id)
     {
         $equipe = equipes::find($id);
-        return response()->json([
-            'status' => 204,
-            'equipe' => $equipe,
-        ]);
+        
+        if($equipe) {
+            $res =  response()->json([
+                'equipe' => $equipe,
+            ], 200);
+        } else {
+            $res =  response()->json([
+                'message' => 'Equipe não encontrada',
+            ], 404);
+        }
+
+        return $res;
     }
 
     public function update(Request $request, $equipe)
     {
         $equipe = equipes::where('id', $request->id)->update($request->all());
 
+        if($equipe) {
+            $res =  response()->json([
+                'message' => 'Equipe Editada com Sucesso'
+            ], 200);
+        } else {
+            $res =  response()->json([
+                'message' => 'Equipe não encontrada'
+            ], 404);
+        }
 
-        return response()->json([
-            'status' => 200,
-            'message' => 'Equipe Editada com Sucesso'
-        ]);
+        return $res;
     }
 
     public function destroy($id)
@@ -60,14 +81,12 @@ class equipesController extends Controller
         if ($equipe) {
             $equipe->delete();
             return response()->json([
-                'status' => 200,
                 'message' => 'Equipe Deletada com Sucesso'
-            ]);
+            ], 200);
         } else {
             return response()->json([
-                'status' => 400,
                 'message' => 'ERROR'
-            ]);
+            ], 404);
         }
     }
 }
