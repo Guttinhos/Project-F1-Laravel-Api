@@ -40,22 +40,7 @@ class equipesController extends Controller
         }
     }
 
-    public function edit($id)
-    {
-        $equipe = equipes::find($id);
-        
-        if($equipe) {
-            $res =  response()->json([
-                'equipe' => $equipe,
-            ], 200);
-        } else {
-            $res =  response()->json([
-                'message' => 'Equipe não encontrada',
-            ], 404);
-        }
 
-        return $res;
-    }
 
     public function update(Request $request, $equipe)
     {
@@ -85,7 +70,7 @@ class equipesController extends Controller
             ], 200);
         } else {
             return response()->json([
-                'message' => 'ERROR'
+                'message' => 'Equipe nao pode ser deletada'
             ], 404);
         }
     }
