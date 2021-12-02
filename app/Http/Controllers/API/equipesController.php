@@ -7,6 +7,14 @@ use App\Models\equipes;
 use Illuminate\Http\Request;
 use \Illuminate\Database\QueryException;
 
+/*
+* União Metropolitana de Educação e Cultura
+* Bacharelado em Sistemas de Informação
+* Programação Web II
+* Prof. Pablo Ricardo Roxo Silva
+* Mauro Freire, Gutemberg Maurício
+*/
+
 class equipesController extends Controller
 {
 
